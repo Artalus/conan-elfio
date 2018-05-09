@@ -6,9 +6,16 @@ using namespace ELFIO;
 int main( int argc, char** argv )
 {
     elfio reader;
+    std::string target =
+#ifdef __linux__
+        argv[0]
+#else
+        "../../test_elf_executable"
+#endif
+        ;
 
-    if ( !reader.load( argv[0] ) ) {
-        std::cerr << argv[0] << " is not an ELF file\n";
+    if ( !reader.load( target ) ) {
+        std::cerr << "error: not an ELF file\n";
         return 1;
     }
 
